@@ -1,6 +1,6 @@
 class Solution {
     public boolean checkStraightLine(int[][] coordinates) {
-        // Base case: 2 points always form a straight line
+        
         if (coordinates.length <= 2) {
             return true;
         }
@@ -13,7 +13,7 @@ class Solution {
         int dx = x1 - x0;
         int dy = y1 - y0;
         
-        // Check if all subsequent points maintain the same slope
+        
         for (int i = 2; i < coordinates.length; i++) {
             int x = coordinates[i][0];
             int y = coordinates[i][1];
