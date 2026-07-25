@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 class UndergroundSystem {
-    // Helper class to bundle check-in data
+    
     private static class CheckInInfo {
         String stationName;
         int checkInTime;
@@ -13,7 +13,7 @@ class UndergroundSystem {
         }
     }
 
-    // Helper class to bundle total statistics
+    
     private static class RouteStat {
         double totalTime = 0;
         int tripCount = 0;
