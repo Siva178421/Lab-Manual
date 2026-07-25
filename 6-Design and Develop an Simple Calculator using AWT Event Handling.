@@ -1,0 +1,134 @@
+import java.awt.*;
+import java.awt.event.*;
+
+public class SimpleCalculator extends Frame implements ActionListener {
+    
+    private TextField display;
+    private Button[] numberButtons;
+    private Button addButton, subButton, mulButton, divButton, eqButton, clrButton;
+    
+    
+    private double num1 = 0, num2 = 0, result = 0;
+    private char operator;
+
+    public SimpleCalculator() {
+        
+        setLayout(new BorderLayout());
+        setTitle("Simple AWT Calculator");
+        setSize(300, 400);
+
+        
+        display = new TextField();
+        display.setEditable(false);
+        display.setFont(new Font("Arial", Font.BOLD, 24));
+        add(display, BorderLayout.NORTH);
+
+        
+        Panel buttonPanel = new Panel();
+        buttonPanel.setLayout(new GridLayout(4, 4, 10, 10));
+
+        
+        numberButtons = new Button[10];
+        for (int i = 0; i < 10; i++) {
+            numberButtons[i] = new Button(String.valueOf(i));
+            numberButtons[i].addActionListener(this);
+        }
+
+        
+        addButton = new Button("+");
+        subButton = new Button("-");
+        mulButton = new Button("*");
+        divButton = new Button("/");
+        eqButton = new Button("=");
+        clrButton = new Button("C");
+
+        
+        addButton.addActionListener(this);
+        subButton.addActionListener(this);
+        mulButton.addActionListener(this);
+        divButton.addActionListener(this);
+        eqButton.addActionListener(this);
+        clrButton.addActionListener(this);
+
+        
+        buttonPanel.add(numberButtons[7]);
+        buttonPanel.add(numberButtons[8]);
+        buttonPanel.add(numberButtons[9]);
+        buttonPanel.add(divButton);
+
+        buttonPanel.add(numberButtons[4]);
+        buttonPanel.add(numberButtons[5]);
+        buttonPanel.add(numberButtons[6]);
+        buttonPanel.add(mulButton);
+
+        buttonPanel.add(numberButtons[1]);
+        buttonPanel.add(numberButtons[2]);
+        buttonPanel.add(numberButtons[3]);
+        buttonPanel.add(subButton);
+
+        buttonPanel.add(clrButton);
+        buttonPanel.add(numberButtons[0]);
+        buttonPanel.add(eqButton);
+        buttonPanel.add(addButton);
+
+        add(buttonPanel, BorderLayout.CENTER);
+
+        
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                System.exit(0);
+            }
+        });
+    }
+
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Object source = e.getSource();
+
+        
+        for (int i = 0; i < 10; i++) {
+            if (source == numberButtons[i]) {
+                display.setText(display.getText() + i);
+                return;
+            }
+        }
+
+        
+        if (source == clrButton) {
+            display.setText("");
+            num1 = num2 = result = 0;
+        } else if (source == addButton || source == subButton || source == mulButton || source == divButton) {
+            num1 = Double.parseDouble(display.getText());
+            operator = ((Button) source).getLabel().charAt(0);
+            display.setText("");
+        } else if (source == eqButton) {
+            num2 = Double.parseDouble(display.getText());
+            
+            switch (operator) {
+                case '+': result = num1 + num2; break;
+                case '-': result = num1 - num2; break;
+                case '*': result = num1 * num2; break;
+                case '/': 
+                    if (num2 != 0) {
+                        result = num1 / num2;
+                    } else {
+                        display.setText("Error");
+                        return;
+                    }
+                    break;
+            }
+            
+            if (result % 1 == 0) {
+                display.setText(String.valueOf((int) result));
+            } else {
+                display.setText(String.valueOf(result));
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        SimpleCalculator calc = new SimpleCalculator();
+        calc.setVisible(true);
+    }
+}
